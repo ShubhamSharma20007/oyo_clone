@@ -1,0 +1,16 @@
+.loginMain {
+    position: relative;
+}
+
+.loginMain::before {
+    content: "";
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url("/images/loginImage.avif") center no-repeat;
+    background-size: cover;
+    position: absolute;
+    filter: brightness(0.7);
+    z-index: -1;
+}
