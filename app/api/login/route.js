@@ -3,11 +3,13 @@ import model from "@/models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
+
+
+
 export async function POST(req, res) {
     try {
   
         const { email, password } = await req.json()
-        // console.log(await req.json())
         mongoConnect();
         const user = await model.findOne({ email })
         if (!user) {

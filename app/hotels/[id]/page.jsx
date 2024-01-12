@@ -1,19 +1,54 @@
+"use client"
 import Header from "@/components/Header"
 import Image from "next/image"
-
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
+import style from "@/app/module.css/button.module.css"
 const page = ({params}) => {
+  const endPoint = params.id;
+  const[idBaseData,setIdBaseData]= useState('')
+
+  const fetchData = async () => {
+    const res = await axios.get(`/api/hotels/${endPoint}`)
+    const data =  await res.data;
+    
+    setIdBaseData(data.data);
+  }
+
+  console.log(idBaseData);
+  useEffect(()=>{
+    fetchData()
+  },[])
+
   return (
     <div>
       <Header></Header>
       <div className="w-full">
-      <center><Image src={"https://images.unsplash.com/photo-1653974123072-cfb9d69725d9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} height={500} width={500} className="w-1/2  h-large-box mr-3 my-5 object-contain" /></center>
+      <center><Image src={idBaseData.banner} height={500} width={500} className="w-1/2  h-large-box mr-3 my-5 object-contain" /></center>
 
       <div className="mx-20">
         <h3 className="text-3xl font-bold">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, autem!
+          {idBaseData.name}
         </h3>
-        <p className="text-xl my-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis dolores nulla alias sit, officia earum maiores fugiat esse similique velit. Molestias, blanditiis laborum voluptates dicta aspernatur ad accusantium voluptatibus exercitationem?</p>
-        <button type="submit" className="bg-sky-500 text-md px-3 py-2 rounded-sm my-4">Price :5400</button>
+        <p className="text-xl my-5">{idBaseData.description}</p>
+        <button type="submit" style={{marginRight:'20px'}} className={`mx-3 ${style.button6}`}>Price :₹{idBaseData.price}</button>
+        <button className={style.button6} style={{background:'#ff000087'}}>Book Order</button>
+      </div>
+      <div className="mx-20 my-5">
+      {
+          idBaseData && idBaseData.facilities.map(fac=>(
+            <>
+              <div className="parent inline-flex justify-center my-3 px-3 items-center gap-5"  key={fac._id}>
+            <div className="flex w-10 h-10">
+              <Image height={40} width={40} src={fac.img} className="w-full h-full" alt="icons"></Image>
+         </div>
+               <li className="text-md list-none  font-semibold ">{fac.name}</li>
+         </div>
+            </>
+          ))
+         }
+    
       </div>
 
         </div> 

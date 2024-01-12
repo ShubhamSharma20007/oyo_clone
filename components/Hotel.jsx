@@ -1,32 +1,57 @@
 import Image from "next/image"
 import Link from "next/link"
-const Hotel = () => {
+import style from "@/app/module.css/button.module.css"
+const Hotel = (props) => {
+  const {item} = props
+
+
   return (
     <div>
-      <div className="h-96 w-full my-3 p-5 ">
-        <div className="flex h-full ">
-            <Image src={"https://images.unsplash.com/photo-1653974123072-cfb9d69725d9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} height={500} width={500} className="w-96  h-large-box mr-3 my-auto object-contain" />
+      <div className="min-h-92 w-full my-3 p-5  ">
+        <div className="flex h-full border px-5 py-3 border-slate-300 rounded-md ">
+            <Image src={item.banner} height={500} width={500} className="w-96  h-large-box mr-3 my-auto object-contain" alt="banner" />
             <div className="grid grid-rows-3 gap-3 max-h-fit  ">
-            <Image src={"https://images.unsplash.com/photo-1653974123072-cfb9d69725d9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} height={500} width={500} className=" w-32 h-36 object-contain " />
-            <Image src={"https://images.unsplash.com/photo-1653974123072-cfb9d69725d9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} height={500} width={500} className="w-32 h-28  object-contain" />
-            <Image src={"https://images.unsplash.com/photo-1653974123072-cfb9d69725d9?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} height={500} width={500} className="w-32 h-28 object-contain " />
+           {
+            item.gallery.map(ele=>{
+              return(
+               <div className="div  w-32 h-24 " key={ele._id}>
+                 <Image src={ele} height={500} width={500} className=" object-contain h-full w-full py-4" alt="images" />
+               </div>
+              )
+            })
+           }
+          
             </div>
-         <div className="ml-10">
-         <div className="tilte text-lg font-semibold line-clamp-1">OYO Hotel 4 To Min</div>
-         <p className="text-justify my-5 text-md ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis eaque error perferendis veniam dolor voluptatibus non autem debitis quam dolorum.
+         <div className="ml-10 ">
+         <div className="tilte text-lg font-semibold line-clamp-1">{item.name}</div>
+         <p className="text-justify my-5 text-md font-semibold ">
+            {item.description}
          </p>
+        <div className="inline-block my-4 ">
+        <span className="text-xl font-semibold mr-3">Location :</span>
+        <span className="text-md font-semibold">{item.location}</span>
+        </div>
          <p><span className="text-xl font-semibold">Facilities :</span></p>
-         <ul className="flex gap-5">
-            <li className="text-md   font-semibold ">Free Wifi</li>
-            <li className="text-md font-semibold">Pet Care</li>
-            <li className="text-md font-semibold">Swimming Pool</li>
-            <li className="text-md font-semibold">Beaches</li>
-            <li className="text-md font-semibold">Restronent</li>
-         </ul>
-         <button type="submit" className="bg-sky-500 text-md px-3 py-2 rounded-sm my-4">Price :5400</button>
-         
-         <Link href={"/hotels/2"} className="text-md font-semibold ml-5 text-red-600">More Details</Link>
+       
+         {
+          item.facilities.map(fac=>(
+            <>
+              <div className="parent inline-flex justify-center my-3 px-3 items-center gap-5"  key={fac._id}>
+            <div className="flex w-10 h-10">
+              <Image height={40} width={40} src={fac.img} className="w-full h-full" alt="icons"></Image>
+         </div>
+               <li className="text-md list-none  font-semibold ">{fac.name}</li>
+         </div>
+            </>
+          ))
+         }
+    
+
+
+     <div className="div btn-section">
+     <button type="submit" className={style.button6}>Price : ₹{item.price}</button>
+         <Link href={`/hotels/${item._id}`} className="text-md font-semibold ml-5 text-red-600">More Details</Link>
+     </div>
          </div>
          
         </div>
