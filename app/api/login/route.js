@@ -5,7 +5,9 @@ import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 export async function POST(req, res) {
     try {
+  
         const { email, password } = await req.json()
+        // console.log(await req.json())
         mongoConnect();
         const user = await model.findOne({ email })
         if (!user) {
@@ -20,6 +22,7 @@ export async function POST(req, res) {
         const token = jwt.sign({ id: user.Id }, process.env.JWT_SECRET, {
             expiresIn: "30d"
         })
+        console.log(25,user)
 
 
         return NextResponse.json({ message: "user login sucessfully", token }, { status: 201 })
