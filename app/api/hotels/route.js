@@ -8,6 +8,7 @@ export const GET = async(request) => {
         mongoConnect();
         const { searchParams } = new URL(request.url);
         const location = searchParams.get("location");
+
         const hotel = await hotelModel.find({ location });
         return NextResponse.json({ message: "Hotel data", hotel, params: { location } }, { status: 200 });
     } catch (error) {

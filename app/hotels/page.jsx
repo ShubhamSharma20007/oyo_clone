@@ -4,18 +4,15 @@ import Header from "@/components/Header";
 import Hotel from "@/components/Hotel";
 import { useEffect } from "react";
 import { useState } from "react";
-
-
-
+import { useSearchParams } from "next/navigation";
 const Page = () => {
-  const [query, setQuery] = useState("");
+  const search = useSearchParams();
   const [hoteldata, setHotelData] = useState([]);
-console.log(query)
+const params = search.get("location")
   const fetchData = async () => {
     try {
-      const res = await axios.get(`/api/hotels?location=${query}`);
+      const res = await axios.get(`/api/hotels?location=${params}`);
       const data = res.data;
-      setQuery(data?.params?.location || "");
       if (data.hotel && res.status === 200) {
         setHotelData(data.hotel);
       } else {
