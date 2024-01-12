@@ -29,7 +29,7 @@ const Login = () => {
     console.log(res)
     if(res?.data){
       const token = res.data.token || "no key found";
-      Cookies.set('token',token)
+      Cookies.set('token',token,{expires:7})
 
      
       alert(res.data.message)
