@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
+import Fillter from "@/components/Fillter";
 
 const Page = () => {
   const auth =  Cookies.get("token") || null;
@@ -33,16 +34,23 @@ const params = search.get("location")
   return (
     <div>
       <Header  auth={auth}/>
+      <div className="grid grid-cols-12">
+        <div className="col-span-2 mt-8">
+          <Fillter></Fillter>
+        </div>
+        <div className="col-span-10">
       { 
       // it's mean data should't null,undefined if not this i would be run 
         hoteldata && hoteldata.map(item=>{
           return(
-           <div className="" key={item._id}>
+           <div className=" " key={item._id}>
              <Hotel item ={item} />
            </div>
           )
         })
       }
+      </div>
+      </div>
     </div>
   );
 };
